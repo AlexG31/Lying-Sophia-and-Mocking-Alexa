@@ -1,6 +1,7 @@
 import gpt_2_simple as gpt2
 import tensorflow as tf
 import glob
+import json
 import os, sys
 from tensorflow.core.protobuf import rewriter_config_pb2
 import sys, logging, time
@@ -9,6 +10,7 @@ log_path = sys.argv[1]
 logging.basicConfig(filename=log_path, filemode='w', level = logging.INFO)
 logger = logging.getLogger('train_model')
 
+outputFile = './gen-result.json'
 rawOutputFile = './raw-output.txt'
 seed_folder = '../seed/'
 model_name = "774M"
@@ -43,6 +45,10 @@ def rawOutput(path, seed, result):
         fout.write(u'----------\n')
         for line in result:
             fout.write(u'{}\n'.format(line))
+
+def outputJsonFile(data, path):
+    with open(path, 'w', encoding='utf8') as fout:
+        json.dump(data, fout, indent = 4, ensure_ascii = False)
 
 if __name__ == '__main__':
     start_time = time.time()
