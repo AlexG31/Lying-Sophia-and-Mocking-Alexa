@@ -24,7 +24,8 @@ def generate(sess, prefix, turn = 100, length = 1023):
     results = gpt2.generate(sess,
         temperature=0.7,
         prefix = prefix,
-        model_name=model_name)
+        model_name=model_name,
+        return_as_list = True)
     return results
 
 def loadSeedFile(path):
@@ -62,6 +63,7 @@ if __name__ == '__main__':
     for ind, s in enumerate(seeds):
         print(u"[{}]using seed {}".format(ind, s))
         result = generate(sess, s)
+        print(u'result size {}'.format(len(result)))
         rawOutput(rawOutputFile, s, result)
         generationResults[s] = result
 
