@@ -18,7 +18,7 @@ echo "generate sentence to $sentenceFileName"
 
 if mkdir $gpt2lock; then
     python3 $generateScriptPath \
-        -output_json_folder $sentenceFolder
+        --output_json_folder $sentenceFolder
 
     deactivate
     # cp $generateStoryFile $exportStoryFile && \
