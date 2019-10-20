@@ -11,7 +11,7 @@ echo "env path: $envPath"
 source $envPath/bin/activate
 
 # GPT-2 Generation
-gpt2lock="$modelFolder/gpt-2.lock"
+gpt2lock="$gitFolder/model/gpt-2.lock"
 dateFileName="`date -I`_`date +%H`"
 sentenceFileName="$sentenceFolder/$dateFileName.json"
 echo "generate sentence to $sentenceFileName" 
