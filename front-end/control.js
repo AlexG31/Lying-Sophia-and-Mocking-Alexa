@@ -16,12 +16,18 @@ function startShow(name) {
     //document.getElementById('image-container').style.display = 'block';
     //document.getElementById('storytext-container').style.display = 'block';
     loadText()
+    getPlayId()
+
+    window.setTimeout(loadText, 12000);
 
     //ReadDream();
 
 }
 
 function loadText() {
+  console.log('load text.')
+  document.getElementById('screen').className = ''
+  //document.getElementById('screen').className = 'scroll-up';
   // lines
   var linesRequest = d3.json(serverAddr + "/sentences/sentence-1571548262.9014888.json")
 
@@ -30,8 +36,22 @@ function loadText() {
     console.log(lineJson['seed'])
     console.log(lineJson['result'])
     document.getElementById('conversation').innerText = conversation;
+    document.getElementById('screen').className = 'scroll-up';
   })
   return linesRequest
+}
+
+function getPlayId() {
+  var url = 'http://47.104.79.69/server/main.py'
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() { 
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        var response = xmlHttp.responseText
+        console.log(xmlHttp.responseText)
+      }
+  }
+  xmlHttp.open("GET", url, true); // true for asynchronous 
+  xmlHttp.send(null);
 }
 
 function PlaySpeech(speechpath) {
