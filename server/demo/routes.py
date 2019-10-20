@@ -7,6 +7,7 @@ speaker = 'Sophia'
 keys = deque(maxlen = 100)
 scriptIndexDict = dict()
 validNames = set(['Alexa', 'Sophia'])
+Loop = 49
 
 @app.route('/')
 @app.route('/index')
@@ -52,7 +53,8 @@ def setNextState(name, pw):
     speaker, index = scriptIndexDict[pw]
     nextName = findNextSpeaker(name)
     if speaker == name:
-        scriptIndexDict[pw] = (nextName, index + 1)
+        nextIndex = (index + 1) % Loop
+        scriptIndexDict[pw] = (nextName, nextIndex)
     return None
 
 def findNextSpeaker(name):
