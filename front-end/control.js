@@ -5,7 +5,7 @@ function generateText(sentenceCount) {
 }
 rep = 0
 var dreamIndex = 0
-var serverAddr = "http://47.104.79.69"
+var serverAddr = "http://47.104.79.69/"
 var role = 'Alexa'
 var passwd = '123'
 
@@ -45,8 +45,7 @@ function loadText(playIndex) {
 }
 
 function getPlayId(callbk) {
-  //var url = `http://47.104.79.69/ask?name=${role}&password=${passwd}`
-  var url = `http://localhost:9003/ask?name=${role}&password=${passwd}`
+  var url = `${serverAddr}/commander/ask?name=${role}&password=${passwd}`
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
       if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
