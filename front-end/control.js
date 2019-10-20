@@ -6,48 +6,56 @@ function generateText(sentenceCount) {
 rep = 0
 var dreamIndex = 0
 var serverAddr = "http://47.104.79.69"
+var role = 'Alexa'
+var passwd = '123'
 
 function startShow(name) {
     console.log('Role: ' + name)
+    role = name
     // hide button
     var button = document.getElementById('main-btn-div');
     button.style.display = 'none';
     document.getElementById('screen').style.display = 'block';
     //document.getElementById('image-container').style.display = 'block';
     //document.getElementById('storytext-container').style.display = 'block';
-    loadText()
-    getPlayId()
-
-    window.setTimeout(loadText, 12000);
 
     //ReadDream();
+    window.setTimeout(mainLoop, 1);
 
 }
 
-function loadText() {
+function mainLoop() {
+    getPlayId(loadText)
+}
+
+function loadText(playIndex) {
   console.log('load text.')
   document.getElementById('screen').className = ''
   //document.getElementById('screen').className = 'scroll-up';
   // lines
-  var linesRequest = d3.json(serverAddr + "/sentences/sentence-1571548262.9014888.json")
+  var linesRequest = d3.json(serverAddr + "/conversation/union.json")
 
-  var r1 = linesRequest.then(function(lineJson){
-    var conversation = lineJson['result']
-    console.log(lineJson['seed'])
-    console.log(lineJson['result'])
+  linesRequest.then(function(lineJson){
+    var conversation = lineJson[playIndex]
+    console.log(conversation)
     document.getElementById('conversation').innerText = conversation;
     document.getElementById('screen').className = 'scroll-up';
   })
   return linesRequest
 }
 
-function getPlayId() {
-  var url = 'http://47.104.79.69/server/main.py'
+function getPlayId(callbk) {
+  //var url = `http://47.104.79.69/ask?name=${role}&password=${passwd}`
+  var url = `http://localhost:9003/ask?name=${role}&password=${passwd}`
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
       if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
         var response = xmlHttp.responseText
-        console.log(xmlHttp.responseText)
+        console.log(`ask response: ${response}`)
+        var playIndex = Number(response)
+        if (playIndex >= 0) {
+          callbk(playIndex)
+        }
       }
   }
   xmlHttp.open("GET", url, true); // true for asynchronous 
