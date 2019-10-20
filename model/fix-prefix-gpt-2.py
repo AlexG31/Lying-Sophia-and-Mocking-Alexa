@@ -6,8 +6,6 @@ import os, sys
 from tensorflow.core.protobuf import rewriter_config_pb2
 import sys, logging, time
 
-log_path = sys.argv[1]
-logging.basicConfig(filename=log_path, filemode='w', level = logging.INFO)
 logger = logging.getLogger('train_model')
 
 outputFile = './gen-result.json'
@@ -61,14 +59,17 @@ def cmd():
     )
 
     parser.add_argument(
-        '--output_json_folder', help="output json sentence path",
-        nargs='?', default='models')
+        '--output_json_folder', help="output json sentence path", default='./')
+    parser.add_argument(
+        '--log_path', help="log path", default='./gpt2-generate-log.txt')
 
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
     args = cmd()
+    log_path = args.log_path
+    logging.basicConfig(filename=log_path, filemode='w', level = logging.INFO)
     sess = gpt2.start_tf_sess()
     gpt2.load_gpt2(sess, model_name=model_name)
 
@@ -76,7 +77,7 @@ if __name__ == '__main__':
     seeds = loadSeeds()
     for ind, s in enumerate(seeds):
         start_time = time.time()
-        outputPath = os.path.join(args.output_json_folder, '{}.json'.start_time)
+        outputPath = os.path.join(args.output_json_folder, 'sentence-{}.json'.start_time)
         logger.info('start training at {}'.format(start_time))
         print(u"[{}]using seed {}".format(ind, s))
         result = generate(sess, s)

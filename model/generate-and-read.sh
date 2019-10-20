@@ -1,12 +1,12 @@
 #!/bin/bash -x
 echo '======== GPT-2 Model =========='
 envPath=$1
-modelFolder=$2
+gitFolder=$2
 sentenceFolder=$3
 outputPath=$4
 
-generateScriptPath=$modelFolder/fix-prefix-gpt-2.py
-utilScriptPath=$modelFolder/util.py
+generateScriptPath=$gitFolder/model/fix-prefix-gpt-2.py
+utilScriptPath=$gitFolder/model/util.py
 echo "env path: $envPath"
 source $envPath/bin/activate
 
