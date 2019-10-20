@@ -33,15 +33,34 @@ function loadText(playIndex) {
   document.getElementById('screen').className = ''
   //document.getElementById('screen').className = 'scroll-up';
   // lines
-  var linesRequest = d3.json(serverAddr + "/static/conversation/union.json")
+  var linesRequest = d3.json(serverAddr + "/conversation/union.json")
 
   linesRequest.then(function(lineJson){
     var conversation = lineJson[playIndex]
     console.log(conversation)
     document.getElementById('conversation').innerText = conversation;
     document.getElementById('screen').className = 'scroll-up';
+
+    window.setTimeout(sendSentenceEndReport, 10000);
   })
   return linesRequest
+}
+
+function sendSentenceEndReport() {
+  var url = `${serverAddr}/commander/report?name=${role}&password=${passwd}`
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() { 
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        var response = xmlHttp.responseText
+        console.log(`report response: ${response}`)
+
+        //debug
+        mainLoop()
+      }
+  }
+  xmlHttp.open("GET", url, true); // true for asynchronous 
+  xmlHttp.send(null);
+
 }
 
 function getPlayId(callbk) {
