@@ -33,7 +33,7 @@ function loadText(playIndex) {
   document.getElementById('screen').className = ''
   //document.getElementById('screen').className = 'scroll-up';
   // lines
-  var linesRequest = d3.json(serverAddr + "/conversation/union.json")
+  var linesRequest = d3.json(serverAddr + "/static/conversation/union.json")
 
   linesRequest.then(function(lineJson){
     var conversation = lineJson[playIndex]
