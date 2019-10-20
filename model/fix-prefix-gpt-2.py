@@ -77,7 +77,8 @@ if __name__ == '__main__':
     seeds = loadSeeds()
     for ind, s in enumerate(seeds):
         start_time = time.time()
-        outputPath = os.path.join(args.output_json_folder, 'sentence-{}.json'.start_time)
+        outputPath = os.path.join(args.output_json_folder, 
+            'sentence-{}.json'.format(start_time))
         logger.info('start training at {}'.format(start_time))
         print(u"[{}]using seed {}".format(ind, s))
         result = generate(sess, s)
