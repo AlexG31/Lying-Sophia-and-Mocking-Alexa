@@ -11,8 +11,7 @@ logger = logging.getLogger('train_model')
 outputFile = './gen-result.json'
 rawOutputFile = './raw-output.txt'
 seed_folder = '../seed/'
-model_name = "774M"
-def generate(sess, prefix, turn = 100, length = 1023):
+def generate(sess, prefix, model_name, turn = 100, length = 1023):
     # results = gpt2.generate(sess,
     #     length=length,
     #     nsamples=20,
@@ -62,12 +61,16 @@ def cmd():
         '--output_json_folder', help="output json sentence path", default='./')
     parser.add_argument(
         '--log_path', help="log path", default='./gpt2-generate-log.txt')
+    parser.add_argument(
+        '--model_name', help="124M, 774M", default='774M')
 
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
     args = cmd()
+
+    model_name = args.model_name
     log_path = args.log_path
     logging.basicConfig(filename=log_path, filemode='w', level = logging.INFO)
     sess = gpt2.start_tf_sess()
@@ -81,7 +84,7 @@ if __name__ == '__main__':
             'sentence-{}.json'.format(start_time))
         logger.info('start training at {}'.format(start_time))
         print(u"[{}]using seed {}".format(ind, s))
-        result = generate(sess, s)
+        result = generate(sess, s, model_name)
         line = simpleCut(result)
         print('[line]{}'.format(line))
         print(u'result size {}'.format(len(result)))
