@@ -5,6 +5,7 @@ import json,argparse
 import os, sys
 from tensorflow.core.protobuf import rewriter_config_pb2
 import sys, logging, time
+from util import loadSeedFile, outputJsonFile
 
 logger = logging.getLogger('train_model')
 
@@ -29,13 +30,6 @@ def simpleCut(result):
     line = result[0]
     return line.split('\n')[0]
 
-def loadSeedFile(path):
-    seeds = []
-    with open(path, 'r', encoding='utf8') as fin:
-        for line in fin:
-            seeds.append(line.strip('\r\n'))
-    return seeds
-            
 def loadSeeds(index = 0):
     files = glob.glob(os.path.join(seed_folder, '*.txt'))
     assert(len(files) > 0)
@@ -47,10 +41,6 @@ def rawOutput(path, seed, result):
         fout.write(u'----------\n')
         for line in result:
             fout.write(u'{}\n'.format(line))
-
-def outputJsonFile(data, path):
-    with open(path, 'w', encoding='utf8') as fout:
-        json.dump(data, fout, indent = 4, ensure_ascii = False)
 
 def cmd():
     parser = argparse.ArgumentParser(
