@@ -27,7 +27,7 @@ def cmd():
     parser.add_argument(
         '--key_json', default="./speech-key.json")
     parser.add_argument(
-        '--delay', type=int, default=1)
+        '--delay', type=int, default=3)
 
     args = parser.parse_args()
     return args
