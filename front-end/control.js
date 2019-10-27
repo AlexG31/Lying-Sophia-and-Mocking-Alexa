@@ -5,7 +5,8 @@ function generateText(sentenceCount) {
 }
 rep = 0
 var dreamIndex = 0
-var serverAddr = "http://47.104.79.69/"
+//var serverAddr = "http://47.104.79.69/"
+var serverAddr = "http://localhost:9004/"
 var role = 'Alexa'
 var passwd = '123'
 
@@ -20,12 +21,13 @@ function startShow(name) {
     //document.getElementById('storytext-container').style.display = 'block';
 
     //ReadDream();
-    window.setTimeout(mainLoop, 1);
+    window.setTimeout(mainLoop, 1000);
 
 }
 
 function mainLoop() {
-    getPlayId(loadText)
+    //getPlayId(loadText)
+    loadText(0)
 }
 
 function loadText(playIndex) {
@@ -36,14 +38,55 @@ function loadText(playIndex) {
   var linesRequest = d3.json(serverAddr + "/conversation/union.json")
 
   linesRequest.then(function(lineJson){
-    var conversation = lineJson[playIndex]
-    console.log(conversation)
-    document.getElementById('conversation').innerText = conversation;
-    document.getElementById('screen').className = 'scroll-up';
-
-    window.setTimeout(sendSentenceEndReport, 10000);
+    var src = lineJson[playIndex]
+    console.log(src)
+    if (Math.random() < 0.3) {
+      showEn(src['result'], src)
+    }
+    else {
+      showZh(src['zh'], src)
+    }
   })
   return linesRequest
+}
+
+function showEn(line, src) {
+  console.log(line)
+  document.getElementById('conversation').innerText = line;
+  document.getElementById('screen').className = 'scroll-up';
+
+  read('voice-en', src)
+  //window.setTimeout(sendSentenceEndReport, 10000);
+  window.setTimeout(mainLoop, 10000);
+}
+
+function showZh(path, src) {
+  var req = d3.json(serverAddr + "/bing" + path)
+
+  req.then(function(zhJson){
+    var zh = zhJson['zh']
+    console.log(zhJson)
+    document.getElementById('conversation').innerText = zh;
+    document.getElementById('screen').className = 'scroll-up';
+
+    read('voice-zh', src)
+    //window.setTimeout(sendSentenceEndReport, 10000);
+    window.setTimeout(mainLoop, 10000);
+  })
+
+}
+
+function read(voice_key, src) {
+  
+  var voiceAddr = serverAddr + "/bing" + src[voice_key]
+
+  var speech = PlaySpeech(voiceAddr);
+  //window.setTimeout(readcaption, 6000);
+  speech.onended = function () {
+      //console.log('Audio ended.')
+      window.setTimeout(mainLoop, 100);
+  }
+
 }
 
 function sendSentenceEndReport() {
