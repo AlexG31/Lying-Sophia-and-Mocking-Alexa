@@ -61,6 +61,10 @@ def cmd():
     args = parser.parse_args()
     return args
 
+def validLength(line):
+    words = line.split(' ')
+    return len(line) < 3000 and len(words) < 200
+
 def generateWithGarentee(sess, seed, model_name, repeatCap = 10):
     line = seed
     for r in range(repeatCap):
@@ -68,7 +72,7 @@ def generateWithGarentee(sess, seed, model_name, repeatCap = 10):
         result = generate(sess, seed, model_name)
         print(u'result size {}'.format(len(result)))
         line = simpleCut(result)
-        if len(line) - len(seed) > 2:
+        if validLength(line) and len(line) - len(seed) > 2:
             break
     return line
 
