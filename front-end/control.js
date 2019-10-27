@@ -81,9 +81,7 @@ function read(voice_key, src) {
   var voiceAddr = serverAddr + "/bing" + src[voice_key]
 
   var speech = PlaySpeech(voiceAddr);
-  //window.setTimeout(readcaption, 6000);
   speech.onended = function () {
-      //console.log('Audio ended.')
       window.setTimeout(mainLoop, 100);
   }
 
