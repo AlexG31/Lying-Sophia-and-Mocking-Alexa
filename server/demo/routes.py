@@ -70,7 +70,7 @@ def setNextState(name, pw):
             p = keys.popleft()
             del scriptIndexDict[p]
         keys.append(pw)
-        scriptIndexDict[pw] = ('Sophia', 0)
+        scriptIndexDict[pw] = ('Alexa', 0)
     
     speaker, index = scriptIndexDict[pw]
     nextName = findNextSpeaker(name)
