@@ -2,6 +2,7 @@ from demo import app
 from flask import request
 from collections import deque
 import time
+from demo import lyutil
 
 speaker = 'Sophia'
 keys = deque(maxlen = 100)
@@ -28,6 +29,22 @@ def ask():
         return str(index)
 
     return "-1"
+
+@app.route('/getdata',methods=['GET',])
+def getData():
+    name = request.args.get('name')
+    password = request.args.get('password')
+
+    if name in validNames:
+        speaker, index = getState(password)
+        while speaker != name:
+            time.sleep(1)
+            speaker, index = getState(password)
+
+        print('index = {}'.format(index))
+        return lyutil.getDataByIndex(index)
+
+    return "{}"
 
 def getState(pw):
     global keys
