@@ -37,6 +37,7 @@ def produceVoice(sentence, converter, output_file_name, args):
     if os.path.exists(output_path):
         print('skipped ...')
         return None
+    time.sleep(args.delay)
     converter.convert(sentence, outputPath = output_path)
     return True
 
@@ -53,7 +54,6 @@ def readByName(name, sentence_file, converter, args, en_index = 0, zh_index = 2)
     print('{}: {}'.format(name, sentence_file))
     print(u'🇬🇧🔜 {}'.format(output_file_name))
     print(sentence)
-    time.sleep(args.delay)
 
     converter.setNameIndex(en_index)
     produceVoice(sentence, converter, output_file_name, args)
@@ -65,7 +65,6 @@ def readByName(name, sentence_file, converter, args, en_index = 0, zh_index = 2)
     assert os.path.exists(zh_path)
     zh = loadZh(zh_path)
     print(zh)
-    time.sleep(args.delay)
 
     converter.setNameIndex(zh_index)
     output_file_name = '{}-zh-{}.mp3'.format(name, sentence_id)
