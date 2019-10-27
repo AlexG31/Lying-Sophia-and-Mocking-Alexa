@@ -50,6 +50,7 @@ function loadText(playIndex) {
   linesRequest.then(function(lineJson){
     var src = lineJson[playIndex]
     console.log(src)
+    document.getElementById('conversation').style.color = 'white'
     if (Math.random() < 0.3) {
       showEn(src['result'], src)
     }
