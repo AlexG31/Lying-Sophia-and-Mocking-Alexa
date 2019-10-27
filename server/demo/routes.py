@@ -42,7 +42,12 @@ def getData():
             speaker, index = getState(password)
 
         print('index = {}'.format(index))
-        return lyutil.getDataByIndex(index, name)
+        data = lyutil.getDataByIndex(index, name)
+        if data is None:
+            setNextState(name, password)
+            return "{}"
+            
+        return data
 
     return "{}"
 
