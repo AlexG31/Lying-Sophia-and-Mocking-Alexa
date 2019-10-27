@@ -11,4 +11,5 @@ echo '========='
 
 rsync -r $git_root/bing/translate-zh $dest_root/bing/
 rsync -r $git_root/bing/voice $dest_root/bing/
+rsync $git_root/bing/*-key.json $dest_root/bing/
 
