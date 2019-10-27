@@ -11,7 +11,7 @@ git_root = os.path.dirname(
              os.path.dirname(current_file_path)
            ))
 print('git_root path:', git_root)
-def getDataByIndex(pid):
+def getDataByIndex(pid, name):
     seed_path = os.path.join(git_root, 'seed', 'conversation1.txt')
     seeds = loadSeedFile(seed_path)
     assert len(seeds) > 0
@@ -20,9 +20,25 @@ def getDataByIndex(pid):
     # get candidates
     sentence_folder = os.path.join(git_root, 'sentences')
     candidates = getCandidates(sentence_folder)
-    c = random.choice(candidates[s])
+    candidates = list(filter(lambda x: hasResource(x, name), candidates[s]))
+    c = random.choice(candidates)
     return json.dumps(c)
 
+def hasResource(data, name):
+    print(data, name)
+    voice_en = '/voice/{}-{}'.format(name.lower(), data['voice-en'])
+    if not resourceExists(voice_en):
+        print('⭕️en voice')
+        return False
+    voice_zh = '/voice/{}-{}'.format(name.lower(), data['voice-zh'])
+    if not resourceExists(voice_zh):
+        print('⭕️zh voice')
+        return False
+    if not resourceExists(data['zh']):
+        print('⭕️zh translate')
+        return False
+    return True
+    
 
 def loadText(path):
     results = []
@@ -105,6 +121,10 @@ def union(args):
         script.append(r)
 
     outputJsonFile(script, args.out_json_path)
+
+def resourceExists(path):
+    abs_path = git_root + '/bing' + path
+    return os.path.exists(abs_path)
 
 def cmd():
     parser = argparse.ArgumentParser(

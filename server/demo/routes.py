@@ -4,7 +4,7 @@ from collections import deque
 import time
 from demo import lyutil
 
-speaker = 'Sophia'
+speaker = 'Alexa'
 keys = deque(maxlen = 100)
 scriptIndexDict = dict()
 validNames = set(['Alexa', 'Sophia'])
@@ -42,7 +42,7 @@ def getData():
             speaker, index = getState(password)
 
         print('index = {}'.format(index))
-        return lyutil.getDataByIndex(index)
+        return lyutil.getDataByIndex(index, name)
 
     return "{}"
 
@@ -54,7 +54,7 @@ def getState(pw):
             p = keys.popleft()
             del scriptIndexDict[p]
         keys.append(pw)
-        scriptIndexDict[pw] = ('Sophia', 0)
+        scriptIndexDict[pw] = ('Alexa', 0)
     return scriptIndexDict[pw]
 
 def setNextState(name, pw):
