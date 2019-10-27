@@ -23,29 +23,40 @@ def loadSeedFile(path):
             seeds.append(line.strip('\r\n'))
     return seeds
 
+def getJsonId(path):
+    pattern = re.compile(r'([a-z0-9\.-]+)\.json')
+    return pattern.match(path).group(1)
+
 def union(args):
     files = glob.glob(os.path.join(args.in_folder, '*.json'))
 
     resultDict = dict()
     lines = []
     for p in files:
+        sid = getJsonId(os.path.split(p)[-1])
         with open(p, 'r', encoding = 'utf8') as fin:
             data = json.load(fin)
         seed = data['seed']
         result = data['result']
         if seed not in resultDict:
             resultDict[seed] = list()
+        data['voice-en'] = 'en-{}.mp3'.format(sid)
+        data['voice-zh'] = 'zh-{}.mp3'.format(sid)
+        data['zh'] = '/translate-zh/zh-{}.json'.format(sid)
         resultDict[data['seed']].append(data['result'])
 
     # output to file
     seeds = loadSeedFile(args.seed_path)
     script = []
-    for s in seeds:
+    for ind, s in enumerate(seeds):
+        name = 'alexa' if ind % 2 == 0 else 'sophia'
         if s not in resultDict:
             break
         assert s in resultDict
         print('[{}] has ({}) results'.format(s, len(resultDict[s])))
         r = random.choice(resultDict[s])
+        r['voice-en'] = '/voice/{}-{}'.format(name, r['voice-en'])
+        r['voice-zh'] = '/voice/{}-{}'.format(name, r['voice-zh'])
         script.append(r)
 
     outputJsonFile(script, args.out_json_path)
