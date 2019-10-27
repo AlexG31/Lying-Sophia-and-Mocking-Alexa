@@ -64,6 +64,7 @@ function showEn(line, src) {
   console.log(line)
   document.getElementById('conversation').innerText = line;
   document.getElementById('screen').className = 'scroll-up flip-text';
+  document.getElementById('screen').style.display = 'block'
 
   read('voice-en', src)
   //window.setTimeout(sendSentenceEndReport, 10000);
@@ -78,6 +79,7 @@ function showZh(path, src) {
     console.log(zhJson)
     document.getElementById('conversation').innerText = zh;
     document.getElementById('screen').className = 'scroll-up flip-text';
+    document.getElementById('screen').style.display = 'block'
 
     read('voice-zh', src)
     //window.setTimeout(mainLoop, 10000);
@@ -133,11 +135,10 @@ function getPlayId(callbk) {
 
 function getPlayData(callbk) {
   document.getElementById('screen').className = ''
-  document.getElementById('conversation').style.color = 'black'
+  document.getElementById('screen').style.display = 'none'
   var url = `${serverAddr}/commander/getdata?name=${role}&password=${passwd}`
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
-      document.getElementById('conversation').style.color = 'white'
       if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
         var response = xmlHttp.responseText
         console.log(`ask response: ${response}`)
