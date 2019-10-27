@@ -54,10 +54,12 @@ class Text2SpeechConverter():
             token = pickle.load(fin)
         return token
 
-    def convert(self, text, 
+    def convert(self, 
+            text, 
             outputPath = './tmp.mp3',
             isNeural = False
             ):
+        text = re.sub(r'[<\|>]+', " ", text)
         language = self.name_list[self.name_index][0]
         speaker = self.name_list[self.name_index][1]
         token = self.loadToken()
