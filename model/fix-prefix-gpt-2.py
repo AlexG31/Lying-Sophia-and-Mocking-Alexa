@@ -53,6 +53,8 @@ def cmd():
         '--log_path', help="log path", default='./gpt2-generate-log.txt')
     parser.add_argument(
         '--model_name', help="124M, 774M", default='774M')
+    parser.add_argument(
+        '--start_index', help="seed start index", type=int, default=0)
 
     args = parser.parse_args()
     return args
@@ -69,6 +71,8 @@ if __name__ == '__main__':
     print('-----generate-----')
     seeds = loadSeeds()
     for ind, s in enumerate(seeds):
+        if ind < args.start_index:
+            continue
         start_time = time.time()
         outputPath = os.path.join(args.output_json_folder, 
             'sentence-{}.json'.format(start_time))
