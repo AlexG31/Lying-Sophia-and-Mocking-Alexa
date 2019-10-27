@@ -51,7 +51,7 @@ function loadText(playIndex) {
 function showEn(line, src) {
   console.log(line)
   document.getElementById('conversation').innerText = line;
-  document.getElementById('screen').className = 'scroll-up';
+  document.getElementById('screen').className = 'scroll-up flip-text';
 
   read('voice-en', src)
   //window.setTimeout(sendSentenceEndReport, 10000);
