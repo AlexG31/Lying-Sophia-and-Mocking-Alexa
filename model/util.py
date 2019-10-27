@@ -43,7 +43,7 @@ def union(args):
         data['voice-en'] = 'en-{}.mp3'.format(sid)
         data['voice-zh'] = 'zh-{}.mp3'.format(sid)
         data['zh'] = '/translate-zh/zh-{}.json'.format(sid)
-        resultDict[data['seed']].append(data['result'])
+        resultDict[data['seed']].append(data)
 
     # output to file
     seeds = loadSeedFile(args.seed_path)
