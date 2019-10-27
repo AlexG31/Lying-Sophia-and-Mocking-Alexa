@@ -133,6 +133,7 @@ function getPlayId(callbk) {
 
 function getPlayData(callbk) {
   document.getElementById('screen').className = ''
+  document.getElementById('conversation').style.color = 'black'
   var url = `${serverAddr}/commander/getdata?name=${role}&password=${passwd}`
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
