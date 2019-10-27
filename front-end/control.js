@@ -66,7 +66,9 @@ function showEn(line, src) {
   document.getElementById('screen').className = 'scroll-up flip-text';
   document.getElementById('screen').style.display = 'block'
 
-  read('voice-en', src)
+  setTimeout(function() {
+    read('voice-en', src)
+  }, 5000)
   //window.setTimeout(sendSentenceEndReport, 10000);
   //window.setTimeout(mainLoop, 10000);
 }
@@ -81,7 +83,9 @@ function showZh(path, src) {
     document.getElementById('screen').className = 'scroll-up flip-text';
     document.getElementById('screen').style.display = 'block'
 
-    read('voice-zh', src)
+    setTimeout(function() {
+      read('voice-zh', src)
+    }, 5000)
     //window.setTimeout(mainLoop, 10000);
   })
 
@@ -134,8 +138,6 @@ function getPlayId(callbk) {
 }
 
 function getPlayData(callbk) {
-  document.getElementById('screen').className = ''
-  document.getElementById('screen').style.display = 'none'
   var url = `${serverAddr}/commander/getdata?name=${role}&password=${passwd}`
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
@@ -144,7 +146,11 @@ function getPlayData(callbk) {
         console.log(`ask response: ${response}`)
         var src = JSON.parse(response)
         if (Object.keys(src).length > 0) {
-          callbk(src)
+          document.getElementById('screen').className = ''
+          document.getElementById('screen').style.display = 'none'
+          setTimeout(function() {
+            callbk(src)
+          }, 1000)
         } else {
           sendSentenceEndReport()
         }
