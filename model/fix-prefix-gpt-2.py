@@ -55,35 +55,56 @@ def cmd():
         '--model_name', help="124M, 774M", default='774M')
     parser.add_argument(
         '--start_index', help="seed start index", type=int, default=0)
+    parser.add_argument(
+        '--seed_cap', help="max number of seeds to run in a session", type=int, default=3)
 
     args = parser.parse_args()
     return args
 
+def generateWithGarentee(sess, seed, model_name, repeatCap = 10):
+    line = seed
+    for r in range(repeatCap):
+        print('[repeat {}]'.format(r))
+        result = generate(sess, seed, model_name)
+        print(u'result size {}'.format(len(result)))
+        line = simpleCut(result)
+        if len(line) - len(seed) > 2:
+            break
+    return line
+
+def runSeeds(seeds, args):
+    tf.reset_default_graph()
+    model_name = args.model_name
+    with gpt2.start_tf_sess() as sess:
+        gpt2.load_gpt2(sess, model_name=model_name)
+        for ind, s in enumerate(seeds):
+            if ind < args.start_index:
+                continue
+            start_time = time.time()
+            outputPath = os.path.join(args.output_json_folder, 
+                'sentence-{}.json'.format(start_time))
+            logger.info('start training at {}'.format(start_time))
+            print(u"[{}]using seed {}".format(ind, s))
+            line = generateWithGarentee(sess, s, model_name)
+
+            print('[line]{}'.format(line))
+            outputJsonFile(dict(seed=s, result = line), outputPath)
+
+            print('time cost {}s'.format(time.time() - start_time))
+            logger.info('time cost {}s'.format(time.time() - start_time))
+
 if __name__ == '__main__':
     args = cmd()
 
-    model_name = args.model_name
     log_path = args.log_path
     logging.basicConfig(filename=log_path, filemode='w', level = logging.INFO)
-    sess = gpt2.start_tf_sess()
-    gpt2.load_gpt2(sess, model_name=model_name)
 
     print('-----generate-----')
     seeds = loadSeeds()
-    for ind, s in enumerate(seeds):
-        if ind < args.start_index:
-            continue
-        start_time = time.time()
-        outputPath = os.path.join(args.output_json_folder, 
-            'sentence-{}.json'.format(start_time))
-        logger.info('start training at {}'.format(start_time))
-        print(u"[{}]using seed {}".format(ind, s))
-        result = generate(sess, s, model_name)
-        line = simpleCut(result)
-        print('[line]{}'.format(line))
-        print(u'result size {}'.format(len(result)))
-        outputJsonFile(dict(seed=s, result = line), outputPath)
+    for ind in range(0, len(seeds), args.seed_cap):
+        print('seed range[{}:{}]'.format(ind, ind + args.seed_cap))
+        sub_seeds = seeds[ind:ind + args.seed_cap]
+        runSeeds(sub_seeds, args)
+    
 
-        print('time cost {}s'.format(time.time() - start_time))
-        logger.info('time cost {}s'.format(time.time() - start_time))
     print('done.')
