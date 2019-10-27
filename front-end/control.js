@@ -25,7 +25,20 @@ function startShow(name) {
 }
 
 function mainLoop() {
-    getPlayId(loadText)
+    //getPlayId(loadText)
+    getPlayData(playByData)
+}
+
+function playByData(src) {
+  document.getElementById('screen').className = ''
+  // lines
+  console.log(src)
+  if (Math.random() < 0.3) {
+    showEn(src['result'], src)
+  }
+  else {
+    showZh(src['zh'], src)
+  }
 }
 
 function loadText(playIndex) {
@@ -111,6 +124,25 @@ function getPlayId(callbk) {
         var playIndex = Number(response)
         if (playIndex >= 0) {
           callbk(playIndex)
+        }
+      }
+  }
+  xmlHttp.open("GET", url, true); // true for asynchronous 
+  xmlHttp.send(null);
+}
+
+function getPlayData(callbk) {
+  var url = `${serverAddr}/commander/getdata?name=${role}&password=${passwd}`
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.onreadystatechange = function() { 
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+        var response = xmlHttp.responseText
+        console.log(`ask response: ${response}`)
+        var src = JSON.parse(response)
+        if (Object.keys(src).length > 0) {
+          callbk(src)
+        } else {
+          sendSentenceEndReport()
         }
       }
   }
