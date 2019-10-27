@@ -10,6 +10,7 @@ var role = 'Alexa'
 var passwd = '123'
 
 function startShow(name) {
+    document.body.requestFullscreen();
     console.log('Role: ' + name)
     role = name
     // hide button
