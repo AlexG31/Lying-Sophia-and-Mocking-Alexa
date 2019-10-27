@@ -22,7 +22,16 @@ def getDataByIndex(pid, name):
     candidates = getCandidates(sentence_folder)
     candidates = list(filter(lambda x: hasResource(x, name), candidates[s]))
     c = random.choice(candidates)
+    c = appendVoiceFullPath(c)
     return json.dumps(c)
+
+def appendVoiceFullPath(data):
+    voice_en = '/voice/{}-{}'.format(name.lower(), data['voice-en'])
+    data['voice-en'] = voice_en
+
+    voice_zh = '/voice/{}-{}'.format(name.lower(), data['voice-zh'])
+    data['voice-zh'] = voice_zh
+    return data
 
 def hasResource(data, name):
     print(data, name)
