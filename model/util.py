@@ -1,6 +1,6 @@
 import glob
 import json
-import os, sys
+import os, sys, re
 import sys, logging, time
 import argparse
 import random
