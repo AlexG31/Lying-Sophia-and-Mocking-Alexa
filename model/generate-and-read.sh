@@ -16,7 +16,7 @@ echo "generate sentence to $sentenceFolder"
 
 if mkdir $gpt2lock; then
     python3 $generateScriptPath \
-        --output_json_folder $sentenceFolder
+        --output_json_folder $sentenceFolder \
         --model_name 774M \
         --seed_cap 5
 
