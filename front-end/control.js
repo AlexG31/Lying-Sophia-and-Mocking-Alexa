@@ -5,8 +5,7 @@ function generateText(sentenceCount) {
 }
 rep = 0
 var dreamIndex = 0
-//var serverAddr = "http://47.104.79.69/"
-var serverAddr = "http://localhost:9004/"
+var serverAddr = "http://47.104.79.69/"
 var role = 'Alexa'
 var passwd = '123'
 
@@ -26,8 +25,7 @@ function startShow(name) {
 }
 
 function mainLoop() {
-    //getPlayId(loadText)
-    loadText(0)
+    getPlayId(loadText)
 }
 
 function loadText(playIndex) {
@@ -61,7 +59,7 @@ function showEn(line, src) {
 }
 
 function showZh(path, src) {
-  var req = d3.json(serverAddr + "/bing" + path)
+  var req = d3.json(serverAddr + path)
 
   req.then(function(zhJson){
     var zh = zhJson['zh']
@@ -70,19 +68,19 @@ function showZh(path, src) {
     document.getElementById('screen').className = 'scroll-up';
 
     read('voice-zh', src)
-    //window.setTimeout(sendSentenceEndReport, 10000);
-    window.setTimeout(mainLoop, 10000);
+    //window.setTimeout(mainLoop, 10000);
   })
 
 }
 
 function read(voice_key, src) {
   
-  var voiceAddr = serverAddr + "/bing" + src[voice_key]
+  var voiceAddr = serverAddr + src[voice_key]
 
   var speech = PlaySpeech(voiceAddr);
   speech.onended = function () {
-      window.setTimeout(mainLoop, 100);
+      window.setTimeout(sendSentenceEndReport, 100);
+      //window.setTimeout(mainLoop, 100);
   }
 
 }
