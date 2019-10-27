@@ -31,7 +31,6 @@ function mainLoop() {
 }
 
 function playByData(src) {
-  document.getElementById('screen').className = ''
   // lines
   console.log(src)
   if (Math.random() < 0.3) {
@@ -133,6 +132,7 @@ function getPlayId(callbk) {
 }
 
 function getPlayData(callbk) {
+  document.getElementById('screen').className = ''
   var url = `${serverAddr}/commander/getdata?name=${role}&password=${passwd}`
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
