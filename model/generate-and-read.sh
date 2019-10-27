@@ -21,10 +21,9 @@ if mkdir $gpt2lock; then
         --seed_cap 5
 
     deactivate
-    # cp $generateStoryFile $exportStoryFile && \
-    # sh /home/alexg/github/EdreamProject/bingAPI/run_api.sh &> \
-    #     "/home/alexg/model/logs/bing-api-$dateFileName.log" && \
-    # sh /home/alexg/github/EdreamProject/util/bin/send_json.sh 
+    bash $gitFolder/bing/run_translate.sh $gitFolder
+    bash $gitFolder/bing/run_speech.sh $gitFolder
+    bash $gitFolder/bing/run_speech.sh $gitFolder
 
     rm -rf $gpt2lock
 else
