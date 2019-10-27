@@ -2,7 +2,7 @@ import gpt_2_simple as gpt2
 import tensorflow as tf
 import glob
 import json,argparse
-import os, sys
+import os, sys, re
 from tensorflow.core.protobuf import rewriter_config_pb2
 import sys, logging, time
 from util import loadSeedFile, outputJsonFile
@@ -28,7 +28,9 @@ def generate(sess, prefix, model_name, turn = 100, length = 1023):
 
 def simpleCut(result):
     line = result[0]
-    return line.split('\n')[0]
+    line = line.split('\n')[0]
+    line = re.sub(r'[_<>\|]+', ' ', line)
+    return line
 
 def loadSeeds(index = 0):
     files = glob.glob(os.path.join(seed_folder, '*.txt'))
