@@ -55,7 +55,7 @@ function showEn(line, src) {
 
   read('voice-en', src)
   //window.setTimeout(sendSentenceEndReport, 10000);
-  window.setTimeout(mainLoop, 10000);
+  //window.setTimeout(mainLoop, 10000);
 }
 
 function showZh(path, src) {
