@@ -45,7 +45,7 @@ class Text2SpeechConverter():
             pickle.dump(content.text, fout)
 
     def setNameIndex(self, index):
-        assert index > 0
+        assert index >= 0
         index = index % len(self.name_list)
         self.name_index = index
         
