@@ -15,6 +15,7 @@ function startShow(name) {
     // hide button
     var button = document.getElementById('main-btn-div');
     button.style.display = 'none';
+    document.getElementById('teller').style.display = 'none';
     document.getElementById('screen').style.display = 'block';
     //document.getElementById('image-container').style.display = 'block';
     //document.getElementById('storytext-container').style.display = 'block';
