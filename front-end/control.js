@@ -50,7 +50,6 @@ function loadText(playIndex) {
   linesRequest.then(function(lineJson){
     var src = lineJson[playIndex]
     console.log(src)
-    document.getElementById('conversation').style.color = 'white'
     if (Math.random() < 0.3) {
       showEn(src['result'], src)
     }
@@ -138,6 +137,7 @@ function getPlayData(callbk) {
   var url = `${serverAddr}/commander/getdata?name=${role}&password=${passwd}`
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() { 
+      document.getElementById('conversation').style.color = 'white'
       if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
         var response = xmlHttp.responseText
         console.log(`ask response: ${response}`)
