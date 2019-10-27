@@ -31,7 +31,6 @@ function mainLoop() {
 function loadText(playIndex) {
   console.log('load text.')
   document.getElementById('screen').className = ''
-  //document.getElementById('screen').className = 'scroll-up';
   // lines
   var linesRequest = d3.json(serverAddr + "/conversation/union.json")
 
@@ -65,7 +64,7 @@ function showZh(path, src) {
     var zh = zhJson['zh']
     console.log(zhJson)
     document.getElementById('conversation').innerText = zh;
-    document.getElementById('screen').className = 'scroll-up';
+    document.getElementById('screen').className = 'scroll-up flip-text';
 
     read('voice-zh', src)
     //window.setTimeout(mainLoop, 10000);
