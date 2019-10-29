@@ -21,6 +21,8 @@ def getDataByIndex(pid, name):
     sentence_folder = os.path.join(git_root, 'sentences')
     candidates = getCandidates(sentence_folder)
     candidates = list(filter(lambda x: hasResource(x, name), candidates[s]))
+    if len(candidates) == 0:
+        return None
     c = random.choice(candidates)
     c = appendVoiceFullPath(c, name)
     return json.dumps(c)
