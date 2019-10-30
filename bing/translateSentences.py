@@ -34,7 +34,7 @@ def loadKey(path):
 
 def main():
     args = cmd()
-    key = loadKey(args.key)
+    key = loadKey(args.key_json)
     translateSentences(args.sentence_folder, args.output_folder, key)
 
 if __name__ == '__main__':
