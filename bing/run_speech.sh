@@ -7,4 +7,5 @@ python3 $git_root/bing/readSentences.py \
     --sentence_folder $git_root/sentences \
     --zh_folder $git_root/bing/translate-zh \
     --conversation_path $git_root/seed/conversation1.txt \
-    --output_folder $git_root/bing/voice
+    --output_folder $git_root/bing/voice \
+    --key_json $git_root/bing/speech-key.json

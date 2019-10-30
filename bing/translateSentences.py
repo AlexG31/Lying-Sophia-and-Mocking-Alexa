@@ -21,7 +21,7 @@ def cmd():
     parser.add_argument(
         '--output_folder', default="./translate-zh.json")
     parser.add_argument(
-        '--key', default="./translate-key.json")
+        '--key_json', default="./translate-key.json")
 
     args = parser.parse_args()
     return args

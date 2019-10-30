@@ -5,4 +5,5 @@ echo 'git root folder:', $git_root
 echo '========='
 python3 $git_root/bing/translateSentences.py \
     --sentence_folder $git_root/sentences \
-    --output_folder $git_root/bing/translate-zh
+    --output_folder $git_root/bing/translate-zh \
+    --key_json $git_root/bing/translate-key.json
