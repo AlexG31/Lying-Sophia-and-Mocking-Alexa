@@ -8,7 +8,7 @@ speaker = 'Alexa'
 keys = deque(maxlen = 100)
 scriptIndexDict = dict()
 validNames = set(['Alexa', 'Sophia'])
-Loop = 49
+Loop = 162
 
 @app.route('/')
 @app.route('/index')
