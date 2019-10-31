@@ -11,7 +11,10 @@ var passwd = '123'
 
 function startShow(name) {
     console.log('Role: ' + name)
+    var inputPassWord = document.getElementById('secretkey').value
+    console.log('Password: ' + inputPassWord)
     role = name
+    passwd = inputPassWord
     // hide button
     var button = document.getElementById('main-btn-div');
     button.style.display = 'none';
