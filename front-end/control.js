@@ -148,13 +148,17 @@ function getPlayData(callbk) {
         var response = xmlHttp.responseText
         console.log(`ask response: ${response}`)
         var src = JSON.parse(response)
-        if (Object.keys(src).length > 0) {
+        if (src['status'].toLowerCase() == 'ok') {
           document.getElementById('screen').className = ''
           document.getElementById('screen').style.display = 'none'
           setTimeout(function() {
             callbk(src)
           }, 1000)
+        } else if (src['status'].toLowerCase() == 'wait') {
+          console.log('Server returns role status: [wait]')
+          window.setTimeout(mainLoop, 2000);
         } else {
+          console.log('Server returns [empty line]')
           sendSentenceEndReport()
         }
       }

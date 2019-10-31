@@ -25,6 +25,7 @@ def getDataByIndex(pid, name):
         return None
     c = random.choice(candidates)
     c = appendVoiceFullPath(c, name)
+    c['status'] = 'ok'
     return json.dumps(c)
 
 def appendVoiceFullPath(data, name):

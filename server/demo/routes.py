@@ -1,7 +1,7 @@
 from demo import app
 from flask import request
 from collections import deque
-import time
+import time, json
 from demo import lyutil
 
 speaker = 'Alexa'
@@ -34,22 +34,23 @@ def ask():
 def getData():
     name = request.args.get('name')
     password = request.args.get('password')
+    empty_response = json.dumps(dict(status = 'empty'))
 
     if name in validNames:
         speaker, index = getState(password)
-        while speaker != name:
-            time.sleep(1)
-            speaker, index = getState(password)
+        if speaker != name:
+            wait_response = json.dumps(dict(status = 'wait'))
+            return wait_response
 
         print('index = {}'.format(index))
         data = lyutil.getDataByIndex(index, name)
         if data is None:
             setNextState(name, password)
-            return "{}"
+            return empty_response
             
         return data
 
-    return "{}"
+    return empty_response
 
 def getState(pw):
     global keys
