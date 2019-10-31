@@ -75,8 +75,8 @@ def getJsonId(path):
     return pattern.match(path).group(1)
 
 resultDict = dict()
-updateResultDictCountDown = 2001
-def getCandidates(sentence_folder, updateCount = 2000):
+updateResultDictCountDown = 201
+def getCandidates(sentence_folder, updateCount = 200):
     global resultDict
     global updateResultDictCountDown
     updateResultDictCountDown += 1
