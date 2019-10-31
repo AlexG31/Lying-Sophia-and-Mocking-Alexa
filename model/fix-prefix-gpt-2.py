@@ -11,7 +11,6 @@ logger = logging.getLogger('train_model')
 
 outputFile = './gen-result.json'
 rawOutputFile = './raw-output.txt'
-seed_folder = '../seed/'
 def generate(sess, prefix, model_name, turn = 100, length = 1023):
     # results = gpt2.generate(sess,
     #     length=length,
@@ -32,8 +31,8 @@ def simpleCut(result):
     line = re.sub(r'[_<>\|]+', ' ', line)
     return line
 
-def loadSeeds(index = 0):
-    files = glob.glob(os.path.join(seed_folder, '*.txt'))
+def loadSeeds(args, index = 0):
+    files = glob.glob(os.path.join(args.seed_folder, '*.txt'))
     assert(len(files) > 0)
     return loadSeedFile(files[0])
 
@@ -59,6 +58,8 @@ def cmd():
         '--start_index', help="seed start index", type=int, default=0)
     parser.add_argument(
         '--seed_cap', help="max number of seeds to run in a session", type=int, default=3)
+    parser.add_argument(
+        '--seed_folder', help="seed file folder", type=str, default='../seed/')
 
     args = parser.parse_args()
     return args
@@ -106,7 +107,7 @@ if __name__ == '__main__':
     logging.basicConfig(filename=log_path, filemode='w', level = logging.INFO)
 
     print('-----generate-----')
-    seeds = loadSeeds()
+    seeds = loadSeeds(args)
     for ind in range(0, len(seeds), args.seed_cap):
         print('seed range[{}:{}]'.format(ind, ind + args.seed_cap))
         sub_seeds = seeds[ind:ind + args.seed_cap]

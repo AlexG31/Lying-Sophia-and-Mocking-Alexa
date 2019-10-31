@@ -18,7 +18,8 @@ if mkdir $gpt2lock; then
     python3 $generateScriptPath \
         --output_json_folder $sentenceFolder \
         --model_name 774M \
-        --seed_cap 5
+        --seed_cap 5 \
+        --seed_folder $gitFolder/seed/
 
     deactivate
     bash $gitFolder/bing/run_translate.sh $gitFolder
