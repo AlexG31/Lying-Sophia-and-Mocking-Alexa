@@ -11,7 +11,7 @@ logger = logging.getLogger('train_model')
 
 outputFile = './gen-result.json'
 rawOutputFile = './raw-output.txt'
-def generate(sess, prefix, model_name, turn = 100, length = 1023):
+def generate(sess, prefix, model_name, args, turn = 100, length = 1023):
     # results = gpt2.generate(sess,
     #     length=length,
     #     nsamples=20,
@@ -22,6 +22,7 @@ def generate(sess, prefix, model_name, turn = 100, length = 1023):
         temperature=0.7,
         prefix = prefix,
         model_name=model_name,
+        model_dir=args.model_dir,
         return_as_list = True)
     return results
 
@@ -74,7 +75,7 @@ def generateWithGarentee(sess, seed, model_name, repeatCap = 10):
     line = seed
     for r in range(repeatCap):
         print('[repeat {}]'.format(r))
-        result = generate(sess, seed, model_name)
+        result = generate(sess, seed, model_name, args)
         print(u'result size {}'.format(len(result)))
         line = simpleCut(result)
         if validLength(line) and len(line) - len(seed) > 2:
