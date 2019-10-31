@@ -19,7 +19,8 @@ if mkdir $gpt2lock; then
         --output_json_folder $sentenceFolder \
         --model_name 774M \
         --seed_cap 5 \
-        --seed_folder $gitFolder/seed/
+        --seed_folder $gitFolder/seed/ \
+        --model_dir $gitFolder/model/models
 
     deactivate
     bash $gitFolder/bing/run_translate.sh $gitFolder

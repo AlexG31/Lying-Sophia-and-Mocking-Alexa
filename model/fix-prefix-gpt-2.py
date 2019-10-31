@@ -55,6 +55,8 @@ def cmd():
     parser.add_argument(
         '--model_name', help="124M, 774M", default='774M')
     parser.add_argument(
+        '--model_dir', help="models dir", default='models')
+    parser.add_argument(
         '--start_index', help="seed start index", type=int, default=0)
     parser.add_argument(
         '--seed_cap', help="max number of seeds to run in a session", type=int, default=3)
@@ -83,7 +85,7 @@ def runSeeds(seeds, args):
     tf.reset_default_graph()
     model_name = args.model_name
     with gpt2.start_tf_sess() as sess:
-        gpt2.load_gpt2(sess, model_name=model_name)
+        gpt2.load_gpt2(sess, model_name=model_name, model_dir=args.model_dir)
         for ind, s in enumerate(seeds):
             if ind < args.start_index:
                 continue
