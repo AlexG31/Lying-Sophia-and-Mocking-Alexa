@@ -37,7 +37,9 @@ function playByData(src) {
   // lines
   console.log(src)
   if (Math.random() < 0.3) {
-    showEn(src['result'], src)
+    setTimeout(function() {
+      showEn(src['result'], src)
+    }, 500)
   }
   else {
     showZh(src['zh'], src)
