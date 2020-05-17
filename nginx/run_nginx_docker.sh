@@ -1,7 +1,8 @@
 #!/bin/sh -x
+user='gpf'
 nginx_config=$1
-sudo docker run --name nginx-l2 \
+sudo docker run --name nginx-alexa \
  -v $nginx_config:/etc/nginx/nginx.conf:ro \
- -v /home/alexg/:/home/alexg/ \
+ -v "/home/$user/:/home/$user/" \
  -p 80:9002 \
  -d nginx
